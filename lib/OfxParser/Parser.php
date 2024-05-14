@@ -50,7 +50,6 @@ class Parser
     public function loadFromString($ofxContent)
     {
         $ofxContent = str_replace(["\r\n", "\r"], "\n", $ofxContent);
-        //$ofxContent = utf8_encode($ofxContent);
         $ofxContent = mb_convert_encoding($ofxContent, "UTF-8", mb_detect_encoding($ofxContent));
 
 
