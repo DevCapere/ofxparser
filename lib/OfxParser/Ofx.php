@@ -248,6 +248,11 @@ class Ofx
     {
         $return = [];
         foreach ($transactions as $t) {
+            $memo = [];
+            foreach ($t->MEMO as $m) {
+                $memo[] = (string)$m;
+            }
+
             $transaction = new Transaction();
             $transaction->type = (string)$t->TRNTYPE;
             $transaction->date = Utils::createDateTimeFromStr($t->DTPOSTED);
@@ -257,9 +262,9 @@ class Ofx
             $transaction->amount = Utils::createAmountFromStr($t->TRNAMT);
             $transaction->uniqueId = (string)$t->FITID;
             $transaction->name = (string)$t->NAME;
-            $transaction->memo = (string)$t->MEMO;
+            $transaction->memo = implode(' ', $memo);
             $transaction->sic = $t->SIC;
-            $transaction->checkNumber = $t->CHECKNUM;
+            $transaction->checkNumber = (string)$t->CHECKNUM;
             $return[] = $transaction;
         }
 
